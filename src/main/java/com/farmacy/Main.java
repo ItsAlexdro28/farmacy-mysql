@@ -1,7 +1,11 @@
 package com.farmacy;
 
+import com.farmacy.Console.GeneralControler;
+
 public class Main {
     public static void main(String[] args) {
-        System.out.println("Hello world!");
+        GeneralControler generalControler = new GeneralControler();
+
+        generalControler.run();
     }
 }
