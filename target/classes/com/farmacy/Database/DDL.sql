@@ -3,6 +3,8 @@ CREATE DATABASE farmacy;
 
 USE farmacy;
 
+SET GLOBAL FOREIGN_KEY_CHECKS=0;
+
 CREATE TABLE country (
 	codecountry VARCHAR(5),
 	namecountry VARCHAR(50),
