@@ -1,7 +1,6 @@
 package com.farmacy.Modules.country.infrastructure.controller;
 
 import java.text.MessageFormat;
-import java.util.List;
 import java.util.Optional;
 import java.util.Scanner;
 
@@ -11,8 +10,6 @@ import com.farmacy.Modules.country.aplication.DeleteCountryUserCase;
 import com.farmacy.Modules.country.aplication.ReadCountryUserCase;
 import com.farmacy.Modules.country.aplication.UpdateCountryUserCase;
 import com.farmacy.Modules.country.domain.entity.Country;
-import com.farmacy.Modules.country.domain.service.CountryService;
-import com.google.protobuf.GeneratedMessage;
 
 public class CountryControler {
     private CreateCountryUserCase createCountryUserCase;

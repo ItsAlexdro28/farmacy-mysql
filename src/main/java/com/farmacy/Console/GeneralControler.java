@@ -2,6 +2,13 @@ package com.farmacy.Console;
 
 import java.util.Scanner;
 
+import com.farmacy.Modules.city.aplication.CreateCityUserCase;
+import com.farmacy.Modules.city.aplication.DeleteCityUserCase;
+import com.farmacy.Modules.city.aplication.ReadCityUserCase;
+import com.farmacy.Modules.city.aplication.UpdateCityUserCase;
+import com.farmacy.Modules.city.domain.service.CityService;
+import com.farmacy.Modules.city.infrastructure.controller.CityController;
+import com.farmacy.Modules.city.infrastructure.reporsitory.CityRepository;
 import com.farmacy.Modules.country.aplication.CreateCountryUserCase;
 import com.farmacy.Modules.country.aplication.DeleteCountryUserCase;
 import com.farmacy.Modules.country.aplication.ReadCountryUserCase;
@@ -9,6 +16,13 @@ import com.farmacy.Modules.country.aplication.UpdateCountryUserCase;
 import com.farmacy.Modules.country.domain.service.CountryService;
 import com.farmacy.Modules.country.infrastructure.controller.CountryControler;
 import com.farmacy.Modules.country.infrastructure.reporsitory.CountryRepository;
+import com.farmacy.Modules.modeadministration.aplication.CreateModeAdministrationUserCase;
+import com.farmacy.Modules.modeadministration.aplication.DeleteModeAdministrationUserCase;
+import com.farmacy.Modules.modeadministration.aplication.ReadModeAdministrationUserCase;
+import com.farmacy.Modules.modeadministration.aplication.UpdateModeAdministrationUserCase;
+import com.farmacy.Modules.modeadministration.domain.service.ModeAdministrationService;
+import com.farmacy.Modules.modeadministration.infrastructure.controller.ModeAdministrationController;
+import com.farmacy.Modules.modeadministration.infrastructure.reporsitory.ModeAdministrationRepository;
 import com.farmacy.Modules.region.aplication.CreateRegionUserCase;
 import com.farmacy.Modules.region.aplication.DeleteRegionUserCase;
 import com.farmacy.Modules.region.aplication.ReadRegionUserCase;
@@ -16,6 +30,13 @@ import com.farmacy.Modules.region.aplication.UpdateRegionUserCase;
 import com.farmacy.Modules.region.domain.service.RegionService;
 import com.farmacy.Modules.region.infrastructure.controller.RegionController;
 import com.farmacy.Modules.region.infrastructure.reporsitory.RegionRepository;
+import com.farmacy.Modules.unitmeasurement.aplication.CreateUnitMeasurementUserCase;
+import com.farmacy.Modules.unitmeasurement.aplication.DeleteUnitMeasurementUserCase;
+import com.farmacy.Modules.unitmeasurement.aplication.ReadUnitMeasurementUserCase;
+import com.farmacy.Modules.unitmeasurement.aplication.UpdateUnitMeasurementUserCase;
+import com.farmacy.Modules.unitmeasurement.domain.service.UnitMeasurementService;
+import com.farmacy.Modules.unitmeasurement.infrastructure.controller.UnitMeasurementController;
+import com.farmacy.Modules.unitmeasurement.infrastructure.reporsitory.UnitMeasurementRepository;
 
 public class GeneralControler {
     public GeneralControler () {
@@ -39,8 +60,29 @@ public class GeneralControler {
         DeleteRegionUserCase deleteRegionUserCase = new DeleteRegionUserCase(regionService);
         RegionController regionController = new RegionController(createRegionUserCase, readRegionUserCase, updateRegionUserCase, deleteRegionUserCase);
 
+        // City
+        CityService cityService = new CityRepository();
+        CreateCityUserCase createCityUserCase = new CreateCityUserCase(cityService);
+        ReadCityUserCase readCityUserCase = new ReadCityUserCase(cityService);
+        UpdateCityUserCase updateCityUserCase = new UpdateCityUserCase(cityService);
+        DeleteCityUserCase deleteCityUserCase = new DeleteCityUserCase(cityService);
+        CityController cityController = new CityController(createCityUserCase, readCityUserCase, updateCityUserCase, deleteCityUserCase);
 
+        // Mode Administration
+        ModeAdministrationService modeAdministrationService = new ModeAdministrationRepository();
+        CreateModeAdministrationUserCase createModeAdministrationUserCase = new CreateModeAdministrationUserCase(modeAdministrationService);
+        ReadModeAdministrationUserCase readModeAdministrationUserCase = new ReadModeAdministrationUserCase(modeAdministrationService);
+        UpdateModeAdministrationUserCase updateModeAdministrationUserCase = new UpdateModeAdministrationUserCase(modeAdministrationService);
+        DeleteModeAdministrationUserCase deleteModeAdministrationUserCase = new DeleteModeAdministrationUserCase(modeAdministrationService);
+        ModeAdministrationController modeAdministrationController = new ModeAdministrationController(createModeAdministrationUserCase, readModeAdministrationUserCase, updateModeAdministrationUserCase, deleteModeAdministrationUserCase);
 
+        // Unit Measurement
+        UnitMeasurementService unitMeasurementService = new UnitMeasurementRepository();
+        CreateUnitMeasurementUserCase createUnitMeasurementUserCase = new CreateUnitMeasurementUserCase(unitMeasurementService);
+        ReadUnitMeasurementUserCase readUnitMeasurementUserCase = new ReadUnitMeasurementUserCase(unitMeasurementService);
+        UpdateUnitMeasurementUserCase updateUnitMeasurementUserCase = new UpdateUnitMeasurementUserCase(unitMeasurementService);
+        DeleteUnitMeasurementUserCase deleteUnitMeasurementUserCase = new DeleteUnitMeasurementUserCase(unitMeasurementService);
+        UnitMeasurementController unitMeasurementController = new UnitMeasurementController(createUnitMeasurementUserCase, readUnitMeasurementUserCase, updateUnitMeasurementUserCase, deleteUnitMeasurementUserCase);
 
 
         // Runing
@@ -57,7 +99,17 @@ public class GeneralControler {
         """;
         String[] mainOptions = {
             "- ( 1 ) Country",
-            "- ( 2 ) Region"
+            "- ( 2 ) Region",
+            "- ( 3 ) City",
+            "- ( 4 ) Mode Administration",
+            "- ( 5 ) Unit Measurement",
+            "- ( 6 ) Active Principle",
+            "- ( 7 ) Laboratory",
+            "- ( 8 ) Customer",
+            "- ( 9 ) Farmacy",
+            "- ( 10 ) Medicine",
+            "- ( 11 ) Farmacy & Medicine",
+            "- ( 0 ) Exit"
         };
 
         System.out.println(header);
@@ -72,6 +124,15 @@ public class GeneralControler {
                 break;
             case 2:
                 regionController.run();
+                break;        
+            case 3:
+                cityController.run();
+                break;        
+            case 4:
+                modeAdministrationController.run();
+                break;        
+            case 5:
+                unitMeasurementController.run();
                 break;        
             default:
                 break;
