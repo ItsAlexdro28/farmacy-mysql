@@ -44,7 +44,7 @@ public class LaboratoryController {
             switch (choice) {
                 case 1:
                     try {
-                        System.out.println("Enter Laboratory Name: ");
+                        System.out.println("\nEnter Laboratory Name: ");
                         String name = scanner.nextLine();
                         System.out.println("Enter City Code: ");
                         String codeCityReg = scanner.nextLine();
@@ -62,7 +62,7 @@ public class LaboratoryController {
                     break;
                 case 2:
                     try {
-                        System.out.println("Enter Laboratory ID: ");
+                        System.out.println("\nEnter Laboratory ID: ");
                         int id = scanner.nextInt();
                         scanner.nextLine();
                         readLaboratoryUserCase.execute(id).ifPresentOrElse(
@@ -80,7 +80,7 @@ public class LaboratoryController {
                     break;
                 case 3:
                     try {
-                        System.out.println("Enter Laboratory ID to Update: ");
+                        System.out.println("\nEnter Laboratory ID to Update: ");
                         int id = scanner.nextInt();
                         scanner.nextLine();
                         Optional<Laboratory> laboratoryToUpdate = readLaboratoryUserCase.execute(id);
@@ -128,7 +128,7 @@ public class LaboratoryController {
                     break;
                 case 4:
                     try {
-                        System.out.println("Enter Laboratory ID to Delete: ");
+                        System.out.println("\nEnter Laboratory ID to Delete: ");
                         int id = scanner.nextInt();
                         scanner.nextLine();
 
@@ -145,6 +145,7 @@ public class LaboratoryController {
                 default:
                     System.out.println("Invalid choice. Please try again.");
             }
+            System.out.println();
         }
 
         scanner.close();

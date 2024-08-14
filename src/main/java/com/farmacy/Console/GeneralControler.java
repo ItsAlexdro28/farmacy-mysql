@@ -23,12 +23,40 @@ import com.farmacy.Modules.country.aplication.UpdateCountryUserCase;
 import com.farmacy.Modules.country.domain.service.CountryService;
 import com.farmacy.Modules.country.infrastructure.controller.CountryControler;
 import com.farmacy.Modules.country.infrastructure.reporsitory.CountryRepository;
+import com.farmacy.Modules.customer.aplication.CreateCustomerUserCase;
+import com.farmacy.Modules.customer.aplication.DeleteCustomerUserCase;
+import com.farmacy.Modules.customer.aplication.ReadCustomerUserCase;
+import com.farmacy.Modules.customer.aplication.UpdateCustomerUserCase;
+import com.farmacy.Modules.customer.domain.service.CustomerService;
+import com.farmacy.Modules.customer.infrastructure.controller.CustomerController;
+import com.farmacy.Modules.customer.infrastructure.reporsitory.CustomerRepository;
+import com.farmacy.Modules.farmacy.aplication.CreateFarmacyUserCase;
+import com.farmacy.Modules.farmacy.aplication.DeleteFarmacyUserCase;
+import com.farmacy.Modules.farmacy.aplication.ReadFarmacyUserCase;
+import com.farmacy.Modules.farmacy.aplication.UpdateFarmacyUserCase;
+import com.farmacy.Modules.farmacy.domain.service.FarmacyService;
+import com.farmacy.Modules.farmacy.infrastructure.controller.FarmacyController;
+import com.farmacy.Modules.farmacy.infrastructure.reporsitory.FarmacyRepository;
+import com.farmacy.Modules.farmacymedicine.aplication.CreateFarmacyMedicineUserCase;
+import com.farmacy.Modules.farmacymedicine.aplication.DeleteFarmacyMedicineUserCase;
+import com.farmacy.Modules.farmacymedicine.aplication.ReadFarmacyMedicineUserCase;
+import com.farmacy.Modules.farmacymedicine.aplication.UpdateFarmacyMedicineUserCase;
+import com.farmacy.Modules.farmacymedicine.domain.service.FarmacyMedicineService;
+import com.farmacy.Modules.farmacymedicine.infrastructure.controller.FarmacyMedicineController;
+import com.farmacy.Modules.farmacymedicine.infrastructure.reporsitory.FarmacyMedicineRepository;
 import com.farmacy.Modules.laboratory.aplication.CreateLaboratoryUserCase;
 import com.farmacy.Modules.laboratory.aplication.DeleteLaboratoryUserCase;
 import com.farmacy.Modules.laboratory.aplication.ReadLaboratoryUserCase;
 import com.farmacy.Modules.laboratory.aplication.UpdateLaboratoryUserCase;
 import com.farmacy.Modules.laboratory.domain.service.LaboratoryService;
 import com.farmacy.Modules.laboratory.infrastructure.reporsitory.LaboratoryRepository;
+import com.farmacy.Modules.medicine.aplication.CreateMedicineUserCase;
+import com.farmacy.Modules.medicine.aplication.DeleteMedicineUserCase;
+import com.farmacy.Modules.medicine.aplication.ReadMedicineUserCase;
+import com.farmacy.Modules.medicine.aplication.UpdateMedicineUserCase;
+import com.farmacy.Modules.medicine.domain.service.MedicineService;
+import com.farmacy.Modules.medicine.infrastructure.controller.MedicineController;
+import com.farmacy.Modules.medicine.infrastructure.reporsitory.MedicineRepository;
 import com.farmacy.Modules.laboratory.infrastructure.controller.LaboratoryController;
 import com.farmacy.Modules.modeadministration.aplication.CreateModeAdministrationUserCase;
 import com.farmacy.Modules.modeadministration.aplication.DeleteModeAdministrationUserCase;
@@ -114,6 +142,41 @@ public class GeneralControler {
         DeleteLaboratoryUserCase deleteLaboratoryUserCase = new DeleteLaboratoryUserCase(laboratoryService);
         LaboratoryController laboratoryController = new LaboratoryController(createLaboratoryUserCase, readLaboratoryUserCase, updateLaboratoryUserCase, deleteLaboratoryUserCase);
 
+        // Customer
+        CustomerService customerService = new CustomerRepository();
+        CreateCustomerUserCase createCustomerUserCase = new CreateCustomerUserCase(customerService);
+        ReadCustomerUserCase readCustomerUserCase = new ReadCustomerUserCase(customerService);
+        UpdateCustomerUserCase updateCustomerUserCase = new UpdateCustomerUserCase(customerService);
+        DeleteCustomerUserCase deleteCustomerUserCase = new DeleteCustomerUserCase(customerService);
+        CustomerController customerController = new CustomerController(createCustomerUserCase, readCustomerUserCase, updateCustomerUserCase, deleteCustomerUserCase);
+
+        // Farmacy
+        FarmacyService farmacyService = new FarmacyRepository();
+        CreateFarmacyUserCase createFarmacyUserCase = new CreateFarmacyUserCase(farmacyService);
+        ReadFarmacyUserCase readFarmacyUserCase = new ReadFarmacyUserCase(farmacyService);
+        UpdateFarmacyUserCase updateFarmacyUserCase = new UpdateFarmacyUserCase(farmacyService);
+        DeleteFarmacyUserCase deleteFarmacyUserCase = new DeleteFarmacyUserCase(farmacyService);
+        FarmacyController farmacyController = new FarmacyController(createFarmacyUserCase, readFarmacyUserCase, updateFarmacyUserCase, deleteFarmacyUserCase);
+
+        // Medicine
+        MedicineService medicineService = new MedicineRepository();
+        CreateMedicineUserCase createMedicineUserCase = new CreateMedicineUserCase(medicineService);
+        ReadMedicineUserCase readMedicineUserCase = new ReadMedicineUserCase(medicineService);
+        UpdateMedicineUserCase updateMedicineUserCase = new UpdateMedicineUserCase(medicineService);
+        DeleteMedicineUserCase deleteMedicineUserCase = new DeleteMedicineUserCase(medicineService);
+        MedicineController medicineController = new MedicineController(createMedicineUserCase, readMedicineUserCase, updateMedicineUserCase, deleteMedicineUserCase);
+
+        // Farmacy & Medicine
+        FarmacyMedicineService farmacyMedicineService = new FarmacyMedicineRepository();
+        CreateFarmacyMedicineUserCase createFarmacyMedicineUserCase = new CreateFarmacyMedicineUserCase(farmacyMedicineService);
+        ReadFarmacyMedicineUserCase readFarmacyMedicineUserCase = new ReadFarmacyMedicineUserCase(farmacyMedicineService);
+        UpdateFarmacyMedicineUserCase updateFarmacyMedicineUserCase = new UpdateFarmacyMedicineUserCase(farmacyMedicineService);
+        DeleteFarmacyMedicineUserCase deleteFarmacyMedicineUserCase = new DeleteFarmacyMedicineUserCase(farmacyMedicineService);
+        FarmacyMedicineController farmacyMedicineController = new FarmacyMedicineController(createFarmacyMedicineUserCase, readFarmacyMedicineUserCase, updateFarmacyMedicineUserCase, deleteFarmacyMedicineUserCase);
+
+
+
+
         // Runing
         Scanner scanner = new Scanner(System.in);
 
@@ -168,6 +231,18 @@ public class GeneralControler {
                 break;        
             case 7:
                 laboratoryController.run();
+                break;        
+            case 8:
+                customerController.run();
+                break;        
+            case 9:
+                farmacyController.run();
+                break;        
+            case 10:
+                medicineController.run();
+                break;        
+            case 11:
+                farmacyMedicineController.run();
                 break;        
             default:
                 break;

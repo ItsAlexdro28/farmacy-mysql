@@ -17,10 +17,7 @@ public class ActivePrincipleController {
     private final UpdateActivePrincipleUserCase updateActivePrincipleUserCase;
     private final DeleteActivePrincipleUserCase deleteActivePrincipleUserCase;
 
-    public ActivePrincipleController(CreateActivePrincipleUserCase createActivePrincipleUserCase,
-                                     ReadActivePrincipleUserCase readActivePrincipleUserCase,
-                                     UpdateActivePrincipleUserCase updateActivePrincipleUserCase,
-                                     DeleteActivePrincipleUserCase deleteActivePrincipleUserCase) {
+    public ActivePrincipleController(CreateActivePrincipleUserCase createActivePrincipleUserCase, ReadActivePrincipleUserCase readActivePrincipleUserCase, UpdateActivePrincipleUserCase updateActivePrincipleUserCase, DeleteActivePrincipleUserCase deleteActivePrincipleUserCase) {
         this.createActivePrincipleUserCase = createActivePrincipleUserCase;
         this.readActivePrincipleUserCase = readActivePrincipleUserCase;
         this.updateActivePrincipleUserCase = updateActivePrincipleUserCase;
@@ -32,7 +29,7 @@ public class ActivePrincipleController {
         int choice = -1;
 
         while (choice != 0) {
-            System.out.println("Please select an option:");
+            System.out.println("\nPlease select an option:");
             System.out.println("1. Create Active Principle");
             System.out.println("2. Read Active Principle");
             System.out.println("3. Update Active Principle");
@@ -46,7 +43,7 @@ public class ActivePrincipleController {
             switch (choice) {
                 case 1:
                     try {
-                        System.out.println("Enter Active Principle Name: ");
+                        System.out.println("\nEnter Active Principle Name: ");
                         String name = scanner.nextLine();
                         ActivePrinciple activePrinciple = new ActivePrinciple();
                         activePrinciple.setNameAp(name);
@@ -60,7 +57,7 @@ public class ActivePrincipleController {
                     break;
                 case 2:
                     try {
-                        System.out.println("Enter Active Principle ID: ");
+                        System.out.println("\nEnter Active Principle ID: ");
                         int id = scanner.nextInt();
                         scanner.nextLine();
                         readActivePrincipleUserCase.execute(id).ifPresentOrElse(
@@ -77,7 +74,7 @@ public class ActivePrincipleController {
                     break;
                 case 3:
                     try {
-                        System.out.println("Enter Active Principle ID to Update: ");
+                        System.out.println("\nEnter Active Principle ID to Update: ");
                         int id = scanner.nextInt();
                         scanner.nextLine();
                         Optional<ActivePrinciple> activePrincipleToUpdate = readActivePrincipleUserCase.execute(id);
@@ -119,7 +116,7 @@ public class ActivePrincipleController {
                     break;
                 case 4:
                     try {
-                        System.out.println("Enter Active Principle ID to Delete: ");
+                        System.out.println("\nEnter Active Principle ID to Delete: ");
                         int id = scanner.nextInt();
                         scanner.nextLine();
 
@@ -131,7 +128,8 @@ public class ActivePrincipleController {
                     }
                     break;
                 case 0:
-                    System.out.println("Exiting...");
+                    GeneralControler generalControler = new GeneralControler();
+                    generalControler.run();
                     break;
                 default:
                     System.out.println("Invalid choice. Please try again.");
