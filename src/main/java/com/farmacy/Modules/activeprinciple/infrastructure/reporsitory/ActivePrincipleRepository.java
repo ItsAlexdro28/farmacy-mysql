@@ -1,4 +1,4 @@
-package com.farmacy.Modules.laboratory.infrastructure.reporsitory;
+package com.farmacy.Modules.activeprinciple.infrastructure.reporsitory;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -7,13 +7,13 @@ import java.sql.ResultSet;
 import java.util.Optional;
 import java.util.Properties;
 
-import com.farmacy.Modules.laboratory.domain.entity.Laboratory;
-import com.farmacy.Modules.laboratory.domain.service.LaboratoryService;
+import com.farmacy.Modules.activeprinciple.domain.entity.ActivePrinciple;
+import com.farmacy.Modules.activeprinciple.domain.service.ActivePrincipleService;
 
-public class LaboratoryRepository implements LaboratoryService {
+public class ActivePrincipleRepository implements ActivePrincipleService {
     private Connection connection;
 
-    public LaboratoryRepository() {
+    public ActivePrincipleRepository() {
         try {
             Properties props = new Properties();
             props.load(getClass().getClassLoader().getResourceAsStream("configdb.properties"));
@@ -27,11 +27,10 @@ public class LaboratoryRepository implements LaboratoryService {
     }
 
     @Override
-    public void createLaboratory(Laboratory laboratory) {
-        String query = "INSERT INTO laboratory (namelab, codecityreg) VALUES (?, ?)";
+    public void createActivePrinciple(ActivePrinciple activePrinciple) {
+        String query = "INSERT INTO activeprinciple (nameap) VALUES (?)";
         try (PreparedStatement ps = connection.prepareStatement(query)) {
-            ps.setString(1, laboratory.getNameLab());
-            ps.setString(2, laboratory.getCodeCityReg());
+            ps.setString(1, activePrinciple.getNameAp());
             ps.executeUpdate();
         } catch (Exception e) {
             e.printStackTrace();
@@ -39,14 +38,14 @@ public class LaboratoryRepository implements LaboratoryService {
     }
 
     @Override
-    public Optional<Laboratory> readLaboratory(int id) {
-        String query = "SELECT id, namelab, codecityreg FROM laboratory WHERE id = ?";
+    public Optional<ActivePrinciple> readActivePrinciple(int idAp) {
+        String query = "SELECT idap, nameap FROM activeprinciple WHERE idap = ?";
         try (PreparedStatement ps = connection.prepareStatement(query)) {
-            ps.setInt(1, id);
+            ps.setInt(1, idAp);
             try (ResultSet rs = ps.executeQuery()) {
                 if (rs.next()) {
-                    Laboratory laboratory = new Laboratory(rs.getInt("id"), rs.getString("namelab"), rs.getString("codecityreg"));
-                    return Optional.of(laboratory);
+                    ActivePrinciple activePrinciple = new ActivePrinciple(rs.getInt("idap"), rs.getString("nameap"));
+                    return Optional.of(activePrinciple);
                 }
             }
         } catch (Exception e) {
@@ -56,12 +55,11 @@ public class LaboratoryRepository implements LaboratoryService {
     }
 
     @Override
-    public void updateLaboratory(Laboratory laboratory, int id) {
-        String query = "UPDATE laboratory SET namelab = ?, codecityreg = ? WHERE id = ?";
+    public void updateActivePrinciple(ActivePrinciple activePrinciple, int idAp) {
+        String query = "UPDATE activeprinciple SET nameap = ? WHERE idap = ?";
         try (PreparedStatement ps = connection.prepareStatement(query)) {
-            ps.setString(1, laboratory.getNameLab());
-            ps.setString(2, laboratory.getCodeCityReg());
-            ps.setInt(3, id);
+            ps.setString(1, activePrinciple.getNameAp());
+            ps.setInt(2, idAp);
             ps.executeUpdate();
         } catch (Exception e) {
             e.printStackTrace();
@@ -69,10 +67,10 @@ public class LaboratoryRepository implements LaboratoryService {
     }
 
     @Override
-    public void deleteLaboratory(int id) {
-        String query = "DELETE FROM laboratory WHERE id = ?";
+    public void deleteActivePrinciple(int idAp) {
+        String query = "DELETE FROM activeprinciple WHERE idap = ?";
         try (PreparedStatement ps = connection.prepareStatement(query)) {
-            ps.setInt(1, id);
+            ps.setInt(1, idAp);
             ps.executeUpdate();
         } catch (Exception e) {
             e.printStackTrace();

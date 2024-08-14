@@ -2,6 +2,13 @@ package com.farmacy.Console;
 
 import java.util.Scanner;
 
+import com.farmacy.Modules.activeprinciple.aplication.CreateActivePrincipleUserCase;
+import com.farmacy.Modules.activeprinciple.aplication.DeleteActivePrincipleUserCase;
+import com.farmacy.Modules.activeprinciple.aplication.ReadActivePrincipleUserCase;
+import com.farmacy.Modules.activeprinciple.aplication.UpdateActivePrincipleUserCase;
+import com.farmacy.Modules.activeprinciple.domain.service.ActivePrincipleService;
+import com.farmacy.Modules.activeprinciple.infrastructure.controller.ActivePrincipleController;
+import com.farmacy.Modules.activeprinciple.infrastructure.reporsitory.ActivePrincipleRepository;
 import com.farmacy.Modules.city.aplication.CreateCityUserCase;
 import com.farmacy.Modules.city.aplication.DeleteCityUserCase;
 import com.farmacy.Modules.city.aplication.ReadCityUserCase;
@@ -16,6 +23,13 @@ import com.farmacy.Modules.country.aplication.UpdateCountryUserCase;
 import com.farmacy.Modules.country.domain.service.CountryService;
 import com.farmacy.Modules.country.infrastructure.controller.CountryControler;
 import com.farmacy.Modules.country.infrastructure.reporsitory.CountryRepository;
+import com.farmacy.Modules.laboratory.aplication.CreateLaboratoryUserCase;
+import com.farmacy.Modules.laboratory.aplication.DeleteLaboratoryUserCase;
+import com.farmacy.Modules.laboratory.aplication.ReadLaboratoryUserCase;
+import com.farmacy.Modules.laboratory.aplication.UpdateLaboratoryUserCase;
+import com.farmacy.Modules.laboratory.domain.service.LaboratoryService;
+import com.farmacy.Modules.laboratory.infrastructure.reporsitory.LaboratoryRepository;
+import com.farmacy.Modules.laboratory.infrastructure.controller.LaboratoryController;
 import com.farmacy.Modules.modeadministration.aplication.CreateModeAdministrationUserCase;
 import com.farmacy.Modules.modeadministration.aplication.DeleteModeAdministrationUserCase;
 import com.farmacy.Modules.modeadministration.aplication.ReadModeAdministrationUserCase;
@@ -84,6 +98,21 @@ public class GeneralControler {
         DeleteUnitMeasurementUserCase deleteUnitMeasurementUserCase = new DeleteUnitMeasurementUserCase(unitMeasurementService);
         UnitMeasurementController unitMeasurementController = new UnitMeasurementController(createUnitMeasurementUserCase, readUnitMeasurementUserCase, updateUnitMeasurementUserCase, deleteUnitMeasurementUserCase);
 
+        // Active Principle
+        ActivePrincipleService activePrincipleService = new ActivePrincipleRepository();
+        CreateActivePrincipleUserCase createActivePrincipleUserCase = new CreateActivePrincipleUserCase(activePrincipleService);
+        ReadActivePrincipleUserCase readActivePrincipleUserCase = new ReadActivePrincipleUserCase(activePrincipleService);
+        UpdateActivePrincipleUserCase updateActivePrincipleUserCase = new UpdateActivePrincipleUserCase(activePrincipleService);
+        DeleteActivePrincipleUserCase deleteActivePrincipleUserCase = new DeleteActivePrincipleUserCase(activePrincipleService);
+        ActivePrincipleController activePrincipleController = new ActivePrincipleController(createActivePrincipleUserCase, readActivePrincipleUserCase, updateActivePrincipleUserCase, deleteActivePrincipleUserCase);
+
+        // Farmacy
+        LaboratoryService laboratoryService = new LaboratoryRepository();
+        CreateLaboratoryUserCase createLaboratoryUserCase = new CreateLaboratoryUserCase(laboratoryService);
+        ReadLaboratoryUserCase readLaboratoryUserCase = new ReadLaboratoryUserCase(laboratoryService);
+        UpdateLaboratoryUserCase updateLaboratoryUserCase = new UpdateLaboratoryUserCase(laboratoryService);
+        DeleteLaboratoryUserCase deleteLaboratoryUserCase = new DeleteLaboratoryUserCase(laboratoryService);
+        LaboratoryController laboratoryController = new LaboratoryController(createLaboratoryUserCase, readLaboratoryUserCase, updateLaboratoryUserCase, deleteLaboratoryUserCase);
 
         // Runing
         Scanner scanner = new Scanner(System.in);
@@ -133,6 +162,12 @@ public class GeneralControler {
                 break;        
             case 5:
                 unitMeasurementController.run();
+                break;        
+            case 6:
+                activePrincipleController.run();
+                break;        
+            case 7:
+                laboratoryController.run();
                 break;        
             default:
                 break;
