@@ -1,7 +1,7 @@
-DROP DATABASE IF EXISTS public;
-CREATE DATABASE public;
+DROP DATABASE IF EXISTS farmacy;
+CREATE DATABASE farmacy;
 
-USE public;
+USE farmacy;
 
 CREATE TABLE country (
 	codecountry VARCHAR(5),

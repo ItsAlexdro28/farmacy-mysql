@@ -10,7 +10,7 @@ public class UpdateCountryUserCase {
         this.countryService = countryService;
     }
     
-    public void execute(Country country) {
-        countryService.updateCountry(country);
+    public void execute(Country country, String code) {
+        countryService.updateCountry(country, code);
     }
 }
