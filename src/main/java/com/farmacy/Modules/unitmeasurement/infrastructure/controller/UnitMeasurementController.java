@@ -10,15 +10,14 @@ import com.farmacy.Modules.unitmeasurement.aplication.UpdateUnitMeasurementUserC
 import com.farmacy.Modules.unitmeasurement.domain.entity.UnitMeasurement;
 
 public class UnitMeasurementController {
-    private final CreateUnitMeasurementUserCase createUnitMeasurementUserCase;
-    private final ReadUnitMeasurementUserCase readUnitMeasurementUserCase;
-    private final UpdateUnitMeasurementUserCase updateUnitMeasurementUserCase;
-    private final DeleteUnitMeasurementUserCase deleteUnitMeasurementUserCase;
+    private CreateUnitMeasurementUserCase createUnitMeasurementUserCase;
+    private ReadUnitMeasurementUserCase readUnitMeasurementUserCase;
+    private UpdateUnitMeasurementUserCase updateUnitMeasurementUserCase;
+    private DeleteUnitMeasurementUserCase deleteUnitMeasurementUserCase;
+    Object[] options = {"Create Unit Measurement", "Read Unit Measurement", "Update Unit Measurement", "Delete Unit Measurement"};
+    int choice = -1;
 
-    public UnitMeasurementController(CreateUnitMeasurementUserCase createUnitMeasurementUserCase,
-                                     ReadUnitMeasurementUserCase readUnitMeasurementUserCase,
-                                     UpdateUnitMeasurementUserCase updateUnitMeasurementUserCase,
-                                     DeleteUnitMeasurementUserCase deleteUnitMeasurementUserCase) {
+    public UnitMeasurementController(CreateUnitMeasurementUserCase createUnitMeasurementUserCase,ReadUnitMeasurementUserCase readUnitMeasurementUserCase,UpdateUnitMeasurementUserCase updateUnitMeasurementUserCase,DeleteUnitMeasurementUserCase deleteUnitMeasurementUserCase) {
         this.createUnitMeasurementUserCase = createUnitMeasurementUserCase;
         this.readUnitMeasurementUserCase = readUnitMeasurementUserCase;
         this.updateUnitMeasurementUserCase = updateUnitMeasurementUserCase;
@@ -27,14 +26,11 @@ public class UnitMeasurementController {
 
     public void run() {
         Scanner scanner = new Scanner(System.in);
-        int choice = -1;
-
         while (choice != 0) {
             System.out.println("Please select an option:");
-            System.out.println("1. Create Unit Measurement");
-            System.out.println("2. Read Unit Measurement");
-            System.out.println("3. Update Unit Measurement");
-            System.out.println("4. Delete Unit Measurement");
+            for (int i = 0; i < options.length; i++) {
+                System.out.println((i + 1) + ". " + options[i]);
+            }
             System.out.println("0. Exit");
 
             System.out.print("Enter your choice: ");
@@ -44,7 +40,7 @@ public class UnitMeasurementController {
             switch (choice) {
                 case 1:
                     try {
-                        System.out.println("Enter Unit Measurement Name: ");
+                        System.out.println("\nEnter Unit Measurement Name: ");
                         String name = scanner.nextLine();
                         UnitMeasurement unitMeasurement = new UnitMeasurement();
                         unitMeasurement.setNameUm(name);
@@ -58,7 +54,7 @@ public class UnitMeasurementController {
                     break;
                 case 2:
                     try {
-                        System.out.println("Enter Unit Measurement ID: ");
+                        System.out.println("\nEnter Unit Measurement ID: ");
                         int id = scanner.nextInt();
                         scanner.nextLine();
                         readUnitMeasurementUserCase.execute(id).ifPresentOrElse(
@@ -75,7 +71,7 @@ public class UnitMeasurementController {
                     break;
                 case 3:
                     try {
-                        System.out.println("Enter Unit Measurement ID to Update: ");
+                        System.out.println("\nEnter Unit Measurement ID to Update: ");
                         int id = scanner.nextInt();
                         scanner.nextLine();
                         Optional<UnitMeasurement> unitMeasurementToUpdate = readUnitMeasurementUserCase.execute(id);
@@ -84,7 +80,7 @@ public class UnitMeasurementController {
                             unitMeasurement -> {
                                 boolean continueUpdating = true;
                                 while (continueUpdating) {
-                                    System.out.println("Select field to update:");
+                                    System.out.println("\nSelect field to update:");
                                     System.out.println("1. Unit Measurement Name");
                                     System.out.println("0. Exit");
 
@@ -93,7 +89,7 @@ public class UnitMeasurementController {
                                     scanner.nextLine();
                                     switch (updateChoice) {
                                         case 1:
-                                            System.out.println("Enter new Unit Measurement Name: ");
+                                            System.out.println("\nEnter new Unit Measurement Name: ");
                                             String newName = scanner.nextLine();
                                             unitMeasurement.setNameUm(newName);
                                             break;
@@ -118,12 +114,10 @@ public class UnitMeasurementController {
                     break;
                 case 4:
                     try {
-                        System.out.println("Enter Unit Measurement ID to Delete: ");
+                        System.out.println("\nEnter Unit Measurement ID to Delete: ");
                         int id = scanner.nextInt();
                         scanner.nextLine();
-
                         deleteUnitMeasurementUserCase.execute(id);
-
                         System.out.println("Unit Measurement deleted successfully!");
                     } catch (Exception e) {
                         System.out.println("An error occurred while deleting the unit measurement: " + e.getMessage());

@@ -1,9 +1,9 @@
 package com.farmacy.Modules.customer.infrastructure.controller;
 
 import java.util.Optional;
-import java.util.Scanner;
 
 import com.farmacy.Console.GeneralControler;
+import com.farmacy.Console.Util;
 import com.farmacy.Modules.customer.aplication.CreateCustomerUserCase;
 import com.farmacy.Modules.customer.aplication.DeleteCustomerUserCase;
 import com.farmacy.Modules.customer.aplication.ReadCustomerUserCase;
@@ -17,6 +17,7 @@ public class CustomerController {
     private DeleteCustomerUserCase deleteCustomerUserCase;
     Object[] options = { "Create Customer", "Read Customer", "Update Customer", "Delete Customer" };
     int choice = -1;
+    boolean dateCorrect = true;
 
     public CustomerController(CreateCustomerUserCase createCustomerUserCase, ReadCustomerUserCase readCustomerUserCase,
             UpdateCustomerUserCase updateCustomerUserCase, DeleteCustomerUserCase deleteCustomerUserCase) {
@@ -27,39 +28,26 @@ public class CustomerController {
     }
 
     public void run() {
-        Scanner scanner = new Scanner(System.in);
         while (choice != 0) {
-            System.out.println("Please select an option:");
+            System.out.println("\nPlease select an option:");
             for (int i = 0; i < options.length; i++) {
                 System.out.println((i + 1) + ". " + options[i]);
             }
             System.out.println("0. Exit");
 
-            System.out.print("Enter your choice: ");
-            choice = scanner.nextInt();
-            scanner.nextLine();
+            choice = Util.getIntInput("Enter your choice: ");
 
             switch (choice) {
                 case 1:
                     try {
-                        System.out.println("\nEnter Customer ID: ");
-                        String id = scanner.nextLine();
-                        System.out.println("Enter Customer First Name: ");
-                        String firstName = scanner.nextLine();
-                        System.out.println("Enter Customer Last Name: ");
-                        String lastName = scanner.nextLine();
-                        System.out.println("Enter Customer City Code: ");
-                        String cityCode = scanner.nextLine();
-                        System.out.println("Enter Customer Email: ");
-                        String email = scanner.nextLine();
-                        System.out.println("Enter Customer Birthdate (YYYY-MM-DD): ");
-                        String birthdate = scanner.nextLine();
-                        System.out.println("Enter Customer Longitude: ");
-                        float longitude = scanner.nextFloat();
-                        System.out.println("Enter Customer Latitude: ");
-                        float latitude = scanner.nextFloat();
-                        scanner.nextLine(); // consume the newline
-
+                        String id = Util.getStringInput("\nEnter Customer ID: ");
+                        String firstName = Util.getStringInput("Enter Customer First Name: ");
+                        String lastName = Util.getStringInput("Enter Customer Last Name: ");
+                        String cityCode = Util.getStringInput("Enter Customer City Code: ");
+                        String email = Util.getStringInput("Enter Customer Email: ");
+                        String birthdate = Util.getStringInput("Enter Customer Birthdate (YYYY-MM-DD): ");
+                        float longitude = Util.getFloatInput("Enter Customer Longitude: ");
+                        float latitude = Util.getFloatInput("Enter Customer Latitude: ");
                         Customer customer = new Customer(id, firstName, lastName, cityCode, email, birthdate, longitude, latitude);
                         createCustomerUserCase.execute(customer);
 
@@ -70,8 +58,7 @@ public class CustomerController {
                     break;
                 case 2:
                     try {
-                        System.out.println("\nEnter Customer ID: ");
-                        String id = scanner.nextLine();
+                        String id = Util.getStringInput("\nEnter Customer ID: ");
                         readCustomerUserCase.execute(id).ifPresentOrElse(
                             customerFound -> {
                                 System.out.println("\nCustomer Info: ");
@@ -92,8 +79,7 @@ public class CustomerController {
                     break;
                 case 3:
                     try {
-                        System.out.println("\nEnter Customer ID to Update: ");
-                        String id = scanner.nextLine();
+                        String id = Util.getStringInput("\nEnter Customer ID to Update: ");
                         Optional<Customer> customerToUpdate = readCustomerUserCase.execute(id);
                         customerToUpdate.ifPresentOrElse(
                             customer -> {
@@ -109,43 +95,39 @@ public class CustomerController {
                                     System.out.println("7. Latitude");
                                     System.out.println("0. Exit");
 
-                                    System.out.print("Enter your choice: ");
-                                    int fieldChoice = scanner.nextInt();
-                                    scanner.nextLine(); // consume the newline
+                                    int fieldChoice = Util.getIntInput("Enter your choice: ");
                                     switch (fieldChoice) {
                                         case 1:
-                                            System.out.println("\nEnter new First Name: ");
-                                            String newFirstName = scanner.nextLine();
+                                            String newFirstName = Util.getStringInput("\nEnter new First Name: ");
                                             customer.setNameCustomer(newFirstName);
                                             break;
                                         case 2:
-                                            System.out.println("\nEnter new Last Name: ");
-                                            String newLastName = scanner.nextLine();
+                                            String newLastName = Util.getStringInput("\nEnter new Last Name: ");
                                             customer.setLastNameCustomer(newLastName);
                                             break;
                                         case 3:
-                                            System.out.println("\nEnter new City Code: ");
-                                            String newCityCode = scanner.nextLine();
+                                            String newCityCode = Util.getStringInput("\nEnter new City Code: ");
                                             customer.setCodeCityCustomer(newCityCode);
                                             break;
                                         case 4:
-                                            System.out.println("\nEnter new Email: ");
-                                            String newEmail = scanner.nextLine();
+                                            String newEmail = Util.getStringInput("\nEnter new Email: ");
                                             customer.setEmailCustomer(newEmail);
                                             break;
                                         case 5:
-                                            System.out.println("\nEnter new Birthdate (YYYY-MM-DD): ");
-                                            String newBirthdate = scanner.nextLine();
+                                            String newBirthdate = "si";
+                                            do {
+                                            String Birthdate = Util.getStringInput("\nEnter new Birthdate (YYYY-MM-DD): ");
+                                            dateCorrect = Util.checkDateFormat(newBirthdate, "yyyy-MM-dd");
+                                            newBirthdate = Birthdate;
+                                            } while (dateCorrect == false);
                                             customer.setBirthDate(newBirthdate);
                                             break;
                                         case 6:
-                                            System.out.println("\nEnter new Longitude: ");
-                                            float newLongitude = scanner.nextFloat();
+                                            float newLongitude = Util.getFloatInput("\nEnter new Longitude: ");
                                             customer.setLongitude(newLongitude);
                                             break;
                                         case 7:
-                                            System.out.println("\nEnter new Latitude: ");
-                                            float newLatitude = scanner.nextFloat();
+                                            float newLatitude = Util.getFloatInput("\nEnter new Latitude: ");
                                             customer.setLatitude(newLatitude);
                                             break;
                                         case 0:
@@ -169,8 +151,7 @@ public class CustomerController {
                     break;
                 case 4:
                     try {
-                        System.out.println("\nEnter Customer ID to Delete: ");
-                        String id = scanner.nextLine();
+                        String id = Util.getStringInput("\nEnter Customer ID to Delete: ");
                         deleteCustomerUserCase.execute(id);
                         System.out.println("Customer deleted successfully!");
                     } catch (Exception e) {
@@ -187,6 +168,5 @@ public class CustomerController {
             }
             System.out.println();
         }
-        scanner.close();
     }
 }

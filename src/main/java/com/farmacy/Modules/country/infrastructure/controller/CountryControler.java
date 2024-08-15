@@ -2,7 +2,6 @@ package com.farmacy.Modules.country.infrastructure.controller;
 
 import java.text.MessageFormat;
 import java.util.Optional;
-import java.util.Scanner;
 
 import com.farmacy.Console.GeneralControler;
 import com.farmacy.Modules.country.aplication.CreateCountryUserCase;
@@ -10,6 +9,7 @@ import com.farmacy.Modules.country.aplication.DeleteCountryUserCase;
 import com.farmacy.Modules.country.aplication.ReadCountryUserCase;
 import com.farmacy.Modules.country.aplication.UpdateCountryUserCase;
 import com.farmacy.Modules.country.domain.entity.Country;
+import com.farmacy.Console.Util;
 
 public class CountryControler {
     private CreateCountryUserCase createCountryUserCase;
@@ -27,25 +27,20 @@ public class CountryControler {
     }
     
     public void run() {
-        Scanner scanner = new Scanner(System.in);
         while (choice != 0) {
-            System.out.println("Please select an option:");
+            System.out.println("\nPlease select an option:");
             for (int i = 0; i < options.length; i++) {
                 System.out.println((i + 1) + ". " + options[i]);
             }
             System.out.println("0. Exit");
             
-            System.out.print("Enter your choice: ");
-            choice = scanner.nextInt();
-            scanner.nextLine();
+            choice = Util.getIntInput("Enter your choice: ");
             
             switch (choice) {
                 case 1:
                     try {
-                        System.out.println("\nEnter Country Code: ");
-                        String code = scanner.nextLine();
-                        System.out.println("Enter Country Name: ");
-                        String name = scanner.nextLine();
+                        String code = Util.getStringInput("\nEnter Country Code: ");
+                        String name = Util.getStringInput("Enter Country Name: ");
                         Country country = new Country();
                         country.setCodeCountry(code);
                         country.setNameCountry(name);
@@ -59,8 +54,7 @@ public class CountryControler {
                     break;
                 case 2:
                     try {
-                        System.out.println("\nEnter Country Code: ");
-                        String code = scanner.nextLine();
+                        String code = Util.getStringInput("\nEnter Country Code: ");
                         readCountryUserCase.execute(code).ifPresentOrElse(
                             countryFound -> {
                                 System.out.println("\nCountry Info: ");
@@ -75,8 +69,7 @@ public class CountryControler {
                     break;
                 case 3:
                     try {
-                        System.out.println("\nEnter Country Code to Update: ");
-                        String code = scanner.nextLine();
+                        String code = Util.getStringInput("\nEnter Country Code: ");
                         Optional<Country> countryToUpdate = readCountryUserCase.execute(code);
                         countryToUpdate.ifPresentOrElse(
                             country -> {
@@ -87,19 +80,14 @@ public class CountryControler {
                                     System.out.println("2. Country Code");
                                     System.out.println("0. Exit");
         
-                                    System.out.print("Enter your choice: ");
-                                    int choice = scanner.nextInt();
-                                    scanner.nextLine();
+                                    int choice = Util.getIntInput("Enter your choice: ");
                                     switch (choice) {
                                         case 1:
-                                            System.out.println("\nEnter new Country Name: ");
-                                            String newName = scanner.nextLine();
+                                            String newName = Util.getStringInput("\nEnter new Country Name: ");
                                             country.setNameCountry(newName);
                                             break;
-                                        
                                         case 2:
-                                            System.out.println("\nEnter new Country Code: ");
-                                            String newCode = scanner.nextLine();
+                                            String newCode = Util.getStringInput("\nEnter new Country Code: ");
                                             country.setCodeCountry(newCode);
                                             break;
                                         case 0:
@@ -124,8 +112,7 @@ public class CountryControler {
                     break;
                 case 4:
                     try {
-                        System.out.println("\nEnter Country Code to Delete: ");
-                        String code = scanner.nextLine();
+                        String code = Util.getStringInput("\nEnter Country Code to Delete: ");
                         deleteCountryUserCase.execute(code);
                         System.out.println("Country deleted successfully!");
                     } catch (Exception e) {
@@ -140,12 +127,8 @@ public class CountryControler {
                     System.out.println("Invalid choice. Please try again.");
             }
             
-            System.out.println(); // Print a blank line for better readability
+            System.out.println(); 
         }
         
-        scanner.close();
     }
-
-    
-    
 }

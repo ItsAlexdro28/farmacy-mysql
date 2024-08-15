@@ -1,9 +1,9 @@
 package com.farmacy.Modules.city.infrastructure.controller;
 import java.text.MessageFormat;
 import java.util.Optional;
-import java.util.Scanner;
 
 import com.farmacy.Console.GeneralControler;
+import com.farmacy.Console.Util;
 import com.farmacy.Modules.city.aplication.CreateCityUserCase;
 import com.farmacy.Modules.city.aplication.DeleteCityUserCase;
 import com.farmacy.Modules.city.aplication.ReadCityUserCase;
@@ -26,7 +26,6 @@ public class CityController {
     }
 
     public void run() {
-        Scanner scanner = new Scanner(System.in);
         while (choice != 0) {
             System.out.println("Please select an option:");
             for (int i = 0; i < options.length; i++) {
@@ -35,18 +34,13 @@ public class CityController {
             System.out.println("0. Exit");
 
             System.out.print("Enter your choice: ");
-            choice = scanner.nextInt();
-            scanner.nextLine();
-
+            choice = Util.getIntInput("Enter your choice: ");
             switch (choice) {
                 case 1:
                     try {
-                        System.out.println("\nEnter City Code: ");
-                        String code = scanner.nextLine();
-                        System.out.println("Enter City Name: ");
-                        String name = scanner.nextLine();
-                        System.out.println("Enter Region Code: ");
-                        String regionCode = scanner.nextLine();
+                        String code = Util.getStringInput("\nEnter City Code: ");
+                        String name = Util.getStringInput("Enter City Name: ");
+                        String regionCode = Util.getStringInput("Enter Region Code: ");
                         City city = new City();
                         city.setCodeCity(code);
                         city.setNameCity(name);
@@ -61,8 +55,7 @@ public class CityController {
                     break;
                 case 2:
                     try {
-                        System.out.println("\nEnter City Code: ");
-                        String code = scanner.nextLine();
+                        String code = Util.getStringInput("\nEnter City Code: ");
                         readCityUserCase.execute(code).ifPresentOrElse(
                             cityFound -> {
                                 System.out.println("\nCity Info: ");
@@ -78,8 +71,7 @@ public class CityController {
                     break;
                 case 3:
                     try {
-                        System.out.println("\nEnter City Code to Update: ");
-                        String code = scanner.nextLine();
+                        String code = Util.getStringInput("\nEnter City Code to Update: ");
                         Optional<City> cityToUpdate = readCityUserCase.execute(code);
                         cityToUpdate.ifPresentOrElse(
                             city -> {
@@ -91,23 +83,18 @@ public class CityController {
                                     System.out.println("3. Region Code");
                                     System.out.println("0. Exit");
 
-                                    System.out.print("Enter your choice: ");
-                                    int choice = scanner.nextInt();
-                                    scanner.nextLine();
+                                    int choice = Util.getIntInput("Enter your choice: ");
                                     switch (choice) {
                                         case 1:
-                                            System.out.println("\nEnter new City Name: ");
-                                            String newName = scanner.nextLine();
+                                            String newName = Util.getStringInput("\nEnter new City Name: ");
                                             city.setNameCity(newName);
                                             break;
                                         case 2:
-                                            System.out.println("\nEnter new City Code: ");
-                                            String newCode = scanner.nextLine();
+                                            String newCode = Util.getStringInput("\nEnter new City Code: ");
                                             city.setCodeCity(newCode);
                                             break;
                                         case 3:
-                                            System.out.println("\nEnter new Region Code: ");
-                                            String newRegionCode = scanner.nextLine();
+                                            String newRegionCode = Util.getStringInput("\nEnter new Region Code: ");
                                             city.setCodeReg(newRegionCode);
                                             break;
                                         case 0:
@@ -132,8 +119,7 @@ public class CityController {
                     break;
                 case 4:
                     try {
-                        System.out.println("\nEnter City Code to Delete: ");
-                        String code = scanner.nextLine();
+                        String code = Util.getStringInput("\nEnter City Code to Delete: ");
                         deleteCityUserCase.execute(code);
                         System.out.println("City deleted successfully!");
                     } catch (Exception e) {
@@ -150,7 +136,5 @@ public class CityController {
 
             System.out.println(); // Print a blank line for better readability
         }
-
-        scanner.close();
     }
 }

@@ -1,9 +1,9 @@
 package com.farmacy.Modules.farmacy.infrastructure.controller;
 
 import java.util.Optional;
-import java.util.Scanner;
 
 import com.farmacy.Console.GeneralControler;
+import com.farmacy.Console.Util;
 import com.farmacy.Modules.farmacy.aplication.CreateFarmacyUserCase;
 import com.farmacy.Modules.farmacy.aplication.DeleteFarmacyUserCase;
 import com.farmacy.Modules.farmacy.aplication.ReadFarmacyUserCase;
@@ -27,7 +27,6 @@ public class FarmacyController {
     }
 
     public void run() {
-        Scanner scanner = new Scanner(System.in);
         while (choice != 0) {
             System.out.println("Please select an option:");
             for (int i = 0; i < options.length; i++) {
@@ -35,27 +34,17 @@ public class FarmacyController {
             }
             System.out.println("0. Exit");
 
-            System.out.print("Enter your choice: ");
-            choice = scanner.nextInt();
-            scanner.nextLine();
+            choice = Util.getIntInput("\nEnter your choice: ");
 
             switch (choice) {
                 case 1:
                     try {
-                        System.out.println("\nEnter Farmacy Name: ");
-                        String name = scanner.nextLine();
-                        System.out.println("Enter Farmacy Address: ");
-                        String address = scanner.nextLine();
-                        System.out.println("Enter Farmacy Longitude: ");
-                        float longitude = scanner.nextFloat();
-                        System.out.println("Enter Farmacy Latitude: ");
-                        float latitude = scanner.nextFloat();
-                        scanner.nextLine(); // consume the newline
-                        System.out.println("Enter Farmacy City Code: ");
-                        String cityCode = scanner.nextLine();
-                        System.out.println("Enter Farmacy Logo: ");
-                        String logo = scanner.nextLine();
-
+                        String name = Util.getStringInput("\nEnter Farmacy Name: ");
+                        String address = Util.getStringInput("Enter Farmacy Address: ");
+                        float longitude = Util.getFloatInput("Enter Farmacy Longitude: ");
+                        float latitude = Util.getFloatInput("Enter Farmacy Latitude: ");
+                        String cityCode = Util.getStringInput("Enter Farmacy City Code: ");
+                        String logo = Util.getStringInput("Enter Farmacy Logo: ");
                         Farmacy farmacy = new Farmacy(0, name, address, longitude, latitude, cityCode, logo);
                         createFarmacyUserCase.execute(farmacy);
 
@@ -66,9 +55,7 @@ public class FarmacyController {
                     break;
                 case 2:
                     try {
-                        System.out.println("\nEnter Farmacy ID: ");
-                        int id = scanner.nextInt();
-                        scanner.nextLine(); // consume the newline
+                        int id = Util.getIntInput("\nEnter Farmacy ID: ");
                         readFarmacyUserCase.execute(id).ifPresentOrElse(
                             farmacyFound -> {
                                 System.out.println("\nFarmacy Info: ");
@@ -88,9 +75,7 @@ public class FarmacyController {
                     break;
                 case 3:
                     try {
-                        System.out.println("\nEnter Farmacy ID to Update: ");
-                        int id = scanner.nextInt();
-                        scanner.nextLine(); // consume the newline
+                        int id = Util.getIntInput("\nEnter Farmacy ID to Update: ");
                         Optional<Farmacy> farmacyToUpdate = readFarmacyUserCase.execute(id);
                         farmacyToUpdate.ifPresentOrElse(
                             farmacy -> {
@@ -105,38 +90,30 @@ public class FarmacyController {
                                     System.out.println("6. Logo");
                                     System.out.println("0. Exit");
 
-                                    System.out.print("Enter your choice: ");
-                                    int fieldChoice = scanner.nextInt();
-                                    scanner.nextLine(); // consume the newline
+                                    int fieldChoice = Util.getIntInput("Enter your choice: ");
                                     switch (fieldChoice) {
                                         case 1:
-                                            System.out.println("\nEnter new Name: ");
-                                            String newName = scanner.nextLine();
+                                            String newName = Util.getStringInput("\nEnter new Name: ");
                                             farmacy.setNameFarmacy(newName);
                                             break;
                                         case 2:
-                                            System.out.println("\nEnter new Address: ");
-                                            String newAddress = scanner.nextLine();
+                                            String newAddress = Util.getStringInput("\nEnter new Address: ");
                                             farmacy.setAddressFarmacy(newAddress);
                                             break;
                                         case 3:
-                                            System.out.println("\nEnter new Longitude: ");
-                                            float newLongitude = scanner.nextFloat();
+                                            float newLongitude = Util.getFloatInput("\nEnter new Longitude: ");
                                             farmacy.setLongitude(newLongitude);
                                             break;
                                         case 4:
-                                            System.out.println("\nEnter new Latitude: ");
-                                            float newLatitude = scanner.nextFloat();
+                                            float newLatitude = Util.getFloatInput("\nEnter new Latitude: ");
                                             farmacy.setLatitude(newLatitude);
                                             break;
                                         case 5:
-                                            System.out.println("\nEnter new City Code: ");
-                                            String newCityCode = scanner.nextLine();
+                                            String newCityCode = Util.getStringInput("\nEnter new City Code: ");
                                             farmacy.setCodeCityFarm(newCityCode);
                                             break;
                                         case 6:
-                                            System.out.println("\nEnter new Logo: ");
-                                            String newLogo = scanner.nextLine();
+                                            String newLogo = Util.getStringInput("\nEnter new Logo: ");
                                             farmacy.setLogoFarmacy(newLogo);
                                             break;
                                         case 0:
@@ -160,9 +137,7 @@ public class FarmacyController {
                     break;
                 case 4:
                     try {
-                        System.out.println("\nEnter Farmacy ID to Delete: ");
-                        int id = scanner.nextInt();
-                        scanner.nextLine(); // consume the newline
+                        int id = Util.getIntInput("\nEnter Farmacy ID to Delete: ");
                         deleteFarmacyUserCase.execute(id);
                         System.out.println("Farmacy deleted successfully!");
                     } catch (Exception e) {
@@ -179,6 +154,5 @@ public class FarmacyController {
             }
             System.out.println();
         }
-        scanner.close();
     }
 }

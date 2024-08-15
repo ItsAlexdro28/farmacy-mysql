@@ -179,7 +179,7 @@ public class GeneralControler {
 
         // Runing
         Scanner scanner = new Scanner(System.in);
-
+        Util.clearConsole();
         String header = """
         ░█▀▀▀ █▀▀█ █▀▀█ █▀▄▀█ █▀▀█ █▀▀ █──█ 
         ░█▀▀▀ █▄▄█ █▄▄▀ █─▀─█ █▄▄█ █── █▄▄█ 
@@ -208,8 +208,7 @@ public class GeneralControler {
         for (String option : mainOptions) {
             System.out.println(option);
         }
-        System.out.println(">> Which table you want to use?");
-        int selectedOption = scanner.nextInt();
+        int selectedOption = Util.getIntInput(">> Which table you want to use?"); 
         switch (selectedOption) {
             case 1:
                 countryControler.run();
@@ -244,7 +243,11 @@ public class GeneralControler {
             case 11:
                 farmacyMedicineController.run();
                 break;        
+            case 0:
+                break;
             default:
+                Util.clearConsole();
+                run();
                 break;
         }
 
