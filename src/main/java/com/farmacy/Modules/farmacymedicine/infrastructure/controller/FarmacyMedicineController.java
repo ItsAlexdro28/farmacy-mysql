@@ -1,9 +1,9 @@
 package com.farmacy.Modules.farmacymedicine.infrastructure.controller;
 
 import java.util.Optional;
-import java.util.Scanner;
 
 import com.farmacy.Console.GeneralControler;
+import com.farmacy.Console.Util;
 import com.farmacy.Modules.farmacymedicine.aplication.CreateFarmacyMedicineUserCase;
 import com.farmacy.Modules.farmacymedicine.aplication.DeleteFarmacyMedicineUserCase;
 import com.farmacy.Modules.farmacymedicine.aplication.ReadFarmacyMedicineUserCase;
@@ -27,7 +27,6 @@ public class FarmacyMedicineController {
     }
 
     public void run() {
-        Scanner scanner = new Scanner(System.in);
         while (choice != 0) {
             System.out.println("Please select an option:");
             for (int i = 0; i < options.length; i++) {
@@ -35,19 +34,14 @@ public class FarmacyMedicineController {
             }
             System.out.println("0. Exit");
 
-            System.out.print("Enter your choice: ");
-            choice = scanner.nextInt();
-            scanner.nextLine();
+            choice = Util.getIntInput("Enter your choice: ");
 
             switch (choice) {
                 case 1:
                     try {
-                        System.out.println("\nEnter Farmacy ID: ");
-                        int idFarmacy = scanner.nextInt();
-                        System.out.println("Enter Medicine ID: ");
-                        int idMedicineFarm = scanner.nextInt();
-                        System.out.println("Enter Price: ");
-                        float price = scanner.nextFloat();
+                        int idFarmacy = Util.getIntInput("\nEnter Farmacy ID: ");
+                        int idMedicineFarm = Util.getIntInput("Enter Medicine ID: ");
+                        float price = Util.getFloatInput("Enter Price: ");
 
                         FarmacyMedicine farmacyMedicine = new FarmacyMedicine(idFarmacy, idMedicineFarm, price);
                         createFarmacyMedicineUserCase.execute(farmacyMedicine);
@@ -59,10 +53,8 @@ public class FarmacyMedicineController {
                     break;
                 case 2:
                     try {
-                        System.out.println("\nEnter Farmacy ID: ");
-                        int idFarmacy = scanner.nextInt();
-                        System.out.println("Enter Medicine ID: ");
-                        int idMedicineFarm = scanner.nextInt();
+                        int idFarmacy = Util.getIntInput("\nEnter Farmacy ID: ");
+                        int idMedicineFarm = Util.getIntInput("Enter Medicine ID: ");
                         Optional<FarmacyMedicine> farmacyMedicineOpt = readFarmacyMedicineUserCase.execute(idFarmacy, idMedicineFarm);
                         farmacyMedicineOpt.ifPresentOrElse(
                             farmacyMedicine -> {
@@ -79,15 +71,12 @@ public class FarmacyMedicineController {
                     break;
                 case 3:
                     try {
-                        System.out.println("\nEnter Farmacy ID to Update: ");
-                        int idFarmacy = scanner.nextInt();
-                        System.out.println("Enter Medicine ID to Update: ");
-                        int idMedicineFarm = scanner.nextInt();
+                        int idFarmacy = Util.getIntInput("\nEnter Farmacy ID to Update: ");
+                        int idMedicineFarm = Util.getIntInput("Enter Medicine ID to Update: ");
                         Optional<FarmacyMedicine> farmacyMedicineOpt = readFarmacyMedicineUserCase.execute(idFarmacy, idMedicineFarm);
                         farmacyMedicineOpt.ifPresentOrElse(
                             farmacyMedicine -> {
-                                System.out.println("\nEnter new Price: ");
-                                float newPrice = scanner.nextFloat();
+                                float newPrice = Util.getFloatInput("\nEnter new Price: ");
                                 farmacyMedicine.setPrice(newPrice);
 
                                 updateFarmacyMedicineUserCase.execute(farmacyMedicine, idFarmacy, idMedicineFarm);
@@ -101,10 +90,8 @@ public class FarmacyMedicineController {
                     break;
                 case 4:
                     try {
-                        System.out.println("\nEnter Farmacy ID to Delete: ");
-                        int idFarmacy = scanner.nextInt();
-                        System.out.println("Enter Medicine ID to Delete: ");
-                        int idMedicineFarm = scanner.nextInt();
+                        int idFarmacy = Util.getIntInput("\nEnter Farmacy ID to Delete: ");
+                        int idMedicineFarm = Util.getIntInput("Enter Medicine ID to Delete: ");
                         deleteFarmacyMedicineUserCase.execute(idFarmacy, idMedicineFarm);
                         System.out.println("Farmacy-Medicine entry deleted successfully!");
                     } catch (Exception e) {
@@ -119,9 +106,7 @@ public class FarmacyMedicineController {
                     System.out.println("Invalid choice. Please try again.");
                     break;
             }
-             System.out.println();
+            System.out.println();
         }
-
-        scanner.close();
     }
 }
